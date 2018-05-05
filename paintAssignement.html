@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>paintAssignement</title>
+</head>
+
+<body>
+    <script>
+
+        var paint = {};
+        var colorList = ["#fafafa", "black", "red", "green", "blue", "yellow",];
+        var featuresList = ["sizePen", "circle", "smallEraser", "bigEraser", "clearAll"];
+        var color = "black";
+        var size = 10;
+        var width = prompt("Enter a width:");
+        var height = prompt("Enter a height:");
+
+        paint.start = function () {
+
+            paint.build();
+            paint.colorsButton();
+            paint.sketch();
+            paint.features();
+            paint.featuresBig();
+            paint.featuresSmall();
+
+        }
+
+        paint.build = function () {
+
+            var canvas = document.createElement("div");
+            canvas.id = "canvasId";
+            canvas.style.width = width + "px";
+            canvas.style.height = height + "px";
+            canvas.style.border = "2px solid black"
+            document.body.appendChild(canvas);
+
+            var pallet = document.createElement("div");
+            pallet.id = "palletId";
+            pallet.style.width = width + "px";
+            pallet.style.height = 60 + "px";
+            pallet.style.backgroundColor = "gray";
+            pallet.style.border = "2px solid black";
+            document.body.appendChild(pallet);
+        }
+
+        paint.colorsButton = function () {
+            var palletOk = document.getElementById("palletId");
+
+            for (var i = 0; i < colorList.length; i++) {
+                var colorsBtns = document.createElement("button");
+                colorsBtns.style.backgroundColor = colorList[i];
+                colorsBtns.style.width = 30 + "px";
+                colorsBtns.style.height = 30 + "px";
+                colorsBtns.style.borderRadius = 25 + "px";
+
+                palletOk.appendChild(colorsBtns);
+                colorsBtns.addEventListener("click", (event) => {
+                    color = event.target.style.backgroundColor;
+                })
+            }
+        }
+
+        paint.features = function () {
+            var eraser = document.createElement("button");
+            eraser.id = "eraserId";
+            eraser.style.width = 30 + "px";
+            eraser.style.height = 30 + "px";
+            eraser.style.backgroundImage = "url(./img/eraser.png)";
+            eraser.style.backgroundRepeat = "no-repeat"
+            eraser.style.backgroundColor = "white"
+            eraser.style.backgroundSize = "cover";
+            document.getElementById("palletId").appendChild(eraser);
+            document.getElementById("eraserId").addEventListener("click", (event) => {
+                color = event.target.style.backgroundColor;
+                size = 15;
+            })
+        }
+        paint.featuresBig = function () {
+
+            var bigPen = document.createElement("button");
+            bigPen.id = "bigPenId";
+            bigPen.style.width = 30 + "px";
+            bigPen.style.height = 30 + "px";
+            bigPen.style.backgroundImage = "url(./img/brush.png)";
+            bigPen.style.backgroundRepeat = "no-repeat"
+            bigPen.style.backgroundSize = "cover";
+            document.getElementById("palletId").appendChild(bigPen);
+            document.getElementById("bigPenId").addEventListener("click", (event) => {
+                size = 40;
+            })
+        }
+
+        paint.featuresSmall = function () {
+
+            var smallPen = document.createElement("button");
+            smallPen.id = "smallPenId";
+            smallPen.style.width = 30 + "px";
+            smallPen.style.height = 30 + "px";
+            smallPen.style.backgroundImage = "url(./img/smallPen.png)";
+            smallPen.style.backgroundRepeat = "no-repeat"
+            smallPen.style.backgroundSize = "cover";
+            document.getElementById("palletId").appendChild(smallPen);
+            document.getElementById("smallPenId").addEventListener("click", (event) => {
+                size = 10;
+            })
+        }
+
+        paint.sketch = function () {
+            document.getElementById("canvasId").addEventListener('mousemove', (event) => {
+                if (event.buttons === 1) {
+                    var x = event.clientX;
+                    var y = event.clientY;
+                    var newSketch = document.createElement("div");
+                    newSketch.style.position = "absolute";
+                    newSketch.style.left = x + "px";
+                    newSketch.style.top = y + "px";
+                    newSketch.style.backgroundColor = color;
+                    newSketch.style.width = size + "px";
+                    newSketch.style.height = size + "px";
+                    document.getElementById("canvasId").appendChild(newSketch);
+                }
+            })
+        }
+
+        paint.start();
+
+    </script>
+</body>
+
+</html>
